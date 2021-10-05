@@ -1,6 +1,6 @@
 # mkdr
 
-RaC(Repositories as Code):`mkdr` (re)organizes direcotries and files according to a configuration file.
+RaC(Repositories as Code): `mkdr` (re)organizes direcotories and files according to a configuration file.
 
 ## Install
 ```
