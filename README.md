@@ -29,7 +29,7 @@ brew install mkdr
 3. `src/` and `log/` directory are generated at the current direcotry.
 
 
-## option
+## Option
 - `--force` | `-f` : If the specified objects are already exist, first remove it and then newly remake the objects.
 - `--export` | `-e` : Generate an `organization.yml` file according to the existing current directory. (Not implemented yet)
 
