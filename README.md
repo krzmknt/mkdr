@@ -8,7 +8,7 @@ brew tap krzmknt/mkdr
 brew install mkdr
 ```
 
-#Usage
+## Usage
 1. Make `organization.yml`.
 ```yaml
 - README.md
@@ -30,7 +30,7 @@ brew install mkdr
 
 
 ## option
-- `--force` | `-f` : If the designated objects are already exist, first remove it and then newly remake the objects.
-- `--export` | `-e` : Generate an `organization.yml` file according to the existing current directory.
+- `--force` | `-f` : If the specified objects are already exist, first remove it and then newly remake the objects.
+- `--export` | `-e` : Generate an `organization.yml` file according to the existing current directory. (Not implemented yet)
 
 
