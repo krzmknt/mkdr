@@ -1,0 +1,21 @@
+- README.md
+# - .git
+- App:
+  -
+- Infra:
+  - Nginx:
+    - Dockerfile
+    - work:
+      - nginx.conf
+  - Python:
+    - Dockerfile
+    - work:
+      - requirements.txt
+      - uwsgi.ini
+  - MySQL:
+- docker-compose.yml
+- log:
+  - access.log
+  - app.log
+  - error.log
+

@@ -114,14 +114,15 @@ def getInput():
     return ch
 
 
+deleteObjects = lambda paths: [shutil.rmtree(p.path) for p in paths if os.path.exists(p.path)]
+
+
 # ---------------------------------------------------------------------------- #
 # Mode
 # ---------------------------------------------------------------------------- #
 def make(filename):
     paths = getPathsFromOrgYaml(filename)
     if arg.force:
-        deleteObjects = lambda paths: [shutil.rmtree(p.path) for p in paths if \
-                os.path.exists(p.path)]
         deleteObjects(paths)
     else:
         checkNotExist(paths)
@@ -143,8 +144,8 @@ def remove(filename):
     green('Success: the directories/files have been removed!')
 
 
-def rerog(filename):
-    print('Future feature: The reorganizing functionality will be implemented in the future release.')
+def reorg(filename):
+    print('Future feature: The reorganizing will be implemented in the future release.')
 
 
 def save(filename):
@@ -160,7 +161,7 @@ def save(filename):
         return getObsAtCurrentDir([],path)
 
     if os.path.exists(filename) and not arg.force:
-        print('The file \'{}\' already exists. Do you overwrite with this saving file? [Y/n]:'.format(arg.save))
+        print('The file \'{}\' already exists. Do you overwrite with this saving file? [Y/n]:'.format(filename))
         if getInput() != 'Y':
             sys.exit()
 
