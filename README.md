@@ -1,5 +1,5 @@
 # mkdr
-DaC(Directories as Code): `mkdr` expands, exports and reorganizes direcotory structure based on a yaml format configuration file.
+`mkdr` is a DaC(Directories as Code) tool by which you can generate, export and reorganize direcotory structure based on a yaml format configuration file.
 
 
 ## Install
