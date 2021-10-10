@@ -1,36 +1,87 @@
 # mkdr
+DaC(Directories as Code): `mkdr` expands, exports and reorganizes direcotory structure based on a yaml format configuration file.
 
-RaC(Repositories as Code): `mkdr` (re)organizes direcotories and files according to a configuration file.
 
 ## Install
+Supported only on Mac OS. Installed via homebrew.
+
 ```
 brew tap krzmknt/mkdr
 brew install mkdr
 ```
 
-## Usage
-1. Make `organization.yml`.
+
+## Example
+1. Create the configuration file `mkdr-config.yml`. For example:
 ```yaml
 - README.md
-# - Dockerfile
-- src:
-  - static:
-    - index.html
-    - style.css
-  - images:
-    -
-  - js:
-    - common.js
+# - .git
+- App:
+  -
+- Infra:
+  - Nginx:
+    - Dockerfile
+    - work:
+      - nginx.conf
+  - Python:
+    - Dockerfile
+    - work:
+      - requirements.txt
+      - uwsgi.ini
+  - MySQL:
+- docker-compose.yml
 - log:
   - access.log
+  - app.log
   - error.log
 ```
-2. Run `mkdr` command at the same directory where you placed file `organization.yml`
-3. `src/` and `log/` directory are generated at the current direcotry.
+2. Run `mkdr` in the same directory where the configuration file `mkdr-config.yml` created. Then, the specified (empty) objects are generated.
 
 
-## Option
-- `--force` | `-f` : If the specified objects are already exist, first remove it and then newly remake the objects.
-- `--export` | `-e` : Generate an `organization.yml` file according to the existing current directory. (Not implemented yet)
+## Specification
+
+### Function Summary
+| Mode\Option               | Feature(No option) | `--force` | `--name` |
+|---------------------------|--------------------|-----------|----------|
+| Organize                  | Make Objects       | Enable    | Enable   |
+| Save                      | Make a Config      | Enable    | Enable   |
+| Remove                    | Remove Objects     | Enable    | Enable   |
+| Reorg(Not implemeted yet) | Sort Objects       | Disable   | Enable   |
+
+
+### Modes
+- Organize(default):
+  - The objects are created in the current directory based on the configuration file.
+  - If a part of the configuration file already exists, an error will occur and no processing will be performed.
+- Save(`-s|--save`):
+  - A configuration file will be created based on the configuration of the current directory.
+  - If the configuration file already exists, you will be asked if you overwrite it.
+- Remove(`-r|--remove`):
+  - All objects in the configuration file will be removed.
+  - Confirm before removing.
+- Reorg(`-o|--reorg`) (Not implemented yet):
+  - Existing directory structure will be reorganized based on the configuration file.
+  - If an object that does not exist in the current directory is included in the configuration file, an error will occur and no processing will be performed.
+
+
+### Options
+- Force(`-f|--force`): Execute the command without confirmation.
+  - For make mode: Overwrite the object in the configuration file with an empty object even if it already exists in the current directory.
+  - For save mode: Overwrite the saving file, even if it already exists.
+  - For remove mode: Remove the objects without confirmation.
+  - For reorg mode: The option is disabled.
+- Name(`-n|--name <filename>`): Specifiy the configuration file name. (Defulat:`mkdr-config.yml`)
+
+
+### .mkdrignore
+`.mkdrignore` functionality will be implemented in the future virsion. Stay tune!
+
+
+### Errors
+- UserError: Running mkdr as root is not supported.
+- ModeError: Only one mode can be specified.
+- OptionError: Reorg mode does not suppourt `--force` option.
+- FileNotFoundError: The existing configuration file must be specified.
+- CannotOverwriteError: Without `--force` option, make mode cannot overwrite the existing objects.
 
 
