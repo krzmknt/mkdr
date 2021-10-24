@@ -1,0 +1,4 @@
+- Implement reorg feature
+- Set up a CI/CD environment
+- Clarify branch operation standards
+- Registered in the official homebrew repository

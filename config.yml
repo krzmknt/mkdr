@@ -1,16 +1,11 @@
-- test02:
-  - 01-normal-case:
-    - 01-01.in
-    - 01-01.out
-    - 01-02.in
-    - 01-02.out
-    - 01-03.in
-    - 01-03.out
-  - 02-error-case:
-    - 02-01.in
-    - 02-01.out
-    - 02-02.in
-    - 02-02.out
-    - 02-03.in
-    - 02-03.out
+- src:
+  - index.html
+  - backup:
+    - index.html
+    - static:
+      - index.html
+      - style.css
+  - static:
+    - index.html
+    - style.css
 
