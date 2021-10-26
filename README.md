@@ -1,5 +1,5 @@
 # mkdr
-`mkdr` is a DaC(Directories as Code) tool by which you can generate, export and reorganize direcotory structure based on a yaml format configuration file.
+`mkdr` is a DaC(Directories as Code) tool by which you can generate, export and reorganize direcotory structure based on a YAML format.
 
 
 ## Install
@@ -12,7 +12,7 @@ brew install mkdr
 
 
 ## Example
-1. Create the configuration file `mkdr-config.yml`. For example:
+1. Create the base file `mkdrcompose.yml`. For example:
 ```yaml
 - README.md
 # - .git
@@ -35,85 +35,57 @@ brew install mkdr
   - app.log
   - error.log
 ```
-2. Run `mkdr` in the same directory where the configuration file `mkdr-config.yml` created. Then, the specified (empty) objects are generated.
+2. Run `mkdr` in the same directory where the base file `mkdrcompose.yml` placesd. The specified objects are generated.
 
 
 ## Specification
 
-### Function Summary
-| Mode\Option | Feature(No option)                    | `--force` | `--name` | '--nut'            |
-|-------------|---------------------------------------|-----------|----------|--------------------|
-| Compose     | Make objects acc. config and template | Enable    | Enable   | Make empty objects |
-| Export      | Make a config                         | Enable    | Enable   | x                  |
-| Delete      | Remove objects acc. config            | Enable    | Enable   | x                  |
-| Reorg       | Resorganize objects acc. config       | x         | Enable   | x                  |
-
-
-### mkdrcompose.yml
-- YAML の文法に従う
-- 同一のパスを持つ複数のオブジェクトは１つの yml には存在できない
-- 255文字以内
-- ディレクトリは辞書、ファイルは文字列で表す。ディレクトリの中身はディレクトリかファイルのリストで表す。カレントディレクトリで含まれる
+### Summary
+| Mode\Option | Feature(No option)  | `--force` | `--name` | '--nut'            |
+|-------------|---------------------|-----------|----------|--------------------|
+| Compose     | Make objects        | Enable    | Enable   | Make empty objects |
+| Export      | Make a base file    | Enable    | Enable   | x                  |
+| Delete      | Remove objects      | Enable    | Enable   | x                  |
+| Reorg       | Resorganize objects | x         | Enable   | x                  |
 
 
 ### Modes
-- Compose `-c|--compose` (default):
-  - The objects are created in the current directory based on the configuration file.
-  - If a part of the configuration file already exists, an error will occur and no processing will be performed.
-- Export `-e|--export`:
-  - A configuration file will be created based on the configuration of the current directory.
-  - If the configuration file already exists, you will be asked if you overwrite it.
-- Delete `-d|--delete`:
-  - All objects in the configuration file will be removed.
-  - Confirm before removing.
-- Reorg `-r|--reorg`:
-  - Existing directory structure will be reorganized based on the configuration file.
-  - If an object that does not exist in the current directory is included in the configuration file, an error will occur and no processing will be performed.
-- Config `--config`
-  - 設定フォルダのパスを表示する
-
-#### Compose
-`-c|--compose` のモードオプションを指定、またはモードオプションを何も指定しないことによって実行される。`mkdrcompose.yml` に記載したディレクトリ構成をカレントディレクトリに展開する。 `mkdrcompose.yml` が存在しない場合はエラーとなる。`mkdrcompose.yml` のファイル名末尾に記載した添字はメタデータとして扱われ無視される。拡張子 `<ext>` のファイルを作成する場合、mkdr の設定フォルダにテンプレートファイル `template.<ext>` が存在するならそのコピーを作成する。存在しない場合は通常通り空のファイルを作成する。展開しようとしたファイルのうち１つでも既に存在している場合、展開は行われない。強制的に展開する場合は `--force` オプションを指定する。
-
-##### Options
-- `-f|--force` 指定時には composeファイルに記載のオブジェクトが既に存在していたとしてもエラーとならずファイルが上書きされる
-- `-n|--name` によって読み込むファイル名が指定可能
-- `-nut|--not-use-template` 指定時には、configもcdのtemplateも利用されないこと
+- Compose
+  - It is executed by specifying the `-c|--compose` mode option, or by not specifying any mode option. Extract the directory structure described in `mkdrcompose.yml` to the current directory. If `mkdrcompose.yml` does not exist, an error occurs. The index at the end of the file name of `mkdrcompose.yml` is treated as metadata and is truncated from the file name. When creating a file with the extension `<ext>`, if the template file `template.<ext>` exists in the mkdr configuration folder, a copy of it will be created. If the template file does not exist, an empty file will be created. If one of the files you try to extract already exists, none of the files will be extracted. To force the expansion, specify the `--force` option.
+- Export
+  - This mode is enabled by specifying the `-e|--export` option. Export the organization of the current directory to `mkdrcompose.yml`. If there are multiple files with the same file name, they will be output indexed.
+- Delete
+  - Performed by specifying the `-d|--delete` option. It deletes the objects listed in `mkdrcompose.yml`. Because the objects are deleted from the top-level folder, the entire folder is deleted even if the objects contained in the folder are not listed in `mkdrcomopse.yml`. You will be asked to comfirm before deleting. The index at the end of the file name in `mkdrcompose.yml` is treated as metadata and ignored. If you execute the delete mode immediately after the compose mode, all generated files will be deleted. If you run execute the delete mode immediately after the export mode, all files in the current directory will be deleted.
+- Reorg
+  - Performed by the `-r|--reorg` mode option. Reorganize files in the existing directory according to `mkdrcompose.yml`. You can assign a index to an objext to specify files with the same name. The indexes of existing files can be checked by the configuration file output by export mode.
+- Config
+  - Show the mkdr config path.
 
 
-#### Export
-`-e|--export` のモードオプションを指定することによって実行される。カレントディレクトリの構成を構成ファイル `mkdrcompose.yml` にエクスポートする。同一名のファイルが複数存在する場合は添字付けられて出力される。Compose の直後に Export を実施た場合は、compose の内容がエクスポートされたファイルに含まれる。
-
-##### Options
-- `-f|--force` を指定することにより出力ファイルが既に存在する場にも確認無しで上書き作成される
-- `-n|--name <filename>` により出力ファイルの名前が選択可能
-
-
-#### Delete
-`-d|--delete` オプションを指定することにより実行される。構成ファイルに記載されたオブジェクトを削除する。トップレベルフォルダから削除するため、フォルダに含まれるオブジェクトが構成ファイルに記載されていなくともフォルダごと削除される。削除前に確認が行われる。`mkdrcompose.yml` のファイル名末尾に記載した添字はメタデータとして扱われ無視される。
-Compose の直後に delete を実行すると展開したすべてのファイルが削除される。Export の直後に delete を実行するとすべてのカレントディレクトリの全てのファイルが削除される。
-
-##### Options
-- `-f|--force` 確認無しでオブジェクトが削除される
-- `-n|--name <filename>` 構成ファイルの名前を指定する
-
-
-#### Reorganization
-`-r|--reorg` モードオプションによって実行される。既存のディレクトリのファイルを `mkdrcompose.yml` の構成に従って再構成する。同一名ファイルの指定には添字を用いる。既存ファイルの添字は export モードによって出力された構成ファイルによって確認することができる。
-
-##### Options
-- `-n|--name <filename>` 構成ファイルの名前を指定する
-
+### Options
+- `-f|--force`
+  - If this option specified, `mkdr` overwrite the objects even if they are alredy exists or do not confirm the deletion.
+- `-n|--name`
+  - You can specify the base file name with this option. (default: `mkdrcompose.yml`)
+- `--nut|--not-use-template`
+  - When `-nut|--not-use-template` is specified, templates in neither the current directory nor config directory should be used.
 
 
 ### Configuration
-- 環境変数 `MKDR_CONFIG_PATH` に設定されたパスを設定フォルダとする。カレントディレクトリに `.mkdr` ディレクトリが存在する場合はそこを設定フォルダとする。
-- `--config` によって設定ファイルのパスを確認できる
+- The path set in the environment variable `MKDR_CONFIG_PATH` is assumed to be the configuration directory. If `.mkdr` directory exists in the current directory, it will be preferred as the configuration folder.
+- You can check the configuration file path with `--config`.
+
+
+### mkdrcompose.yml
+- Follow the syntanx of YAML.
+- File name is a string type. Directory name is a key of a dictionary, and its contents are represented by a list of directories and files as the value of the dictionary.
+- The naming rules for files and directories are the same as those of the operating system, up to 255 characters.
+- Multiple objects with the same path cannot exist in a single `mkdrcompose.yml` file.
+- The file name can be changed by setting the value of the `MKDR_BASE_FILENAME` environment variable.
+- You can disable the line of `mkdrcompose.yml` by commenting it out or putting it in `.mkdrignore`.
 
 
 ### .mkdrignore
 - `.mkdrignore` is implemeted in the future version.
-
-
 
 
