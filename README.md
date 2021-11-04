@@ -1,6 +1,5 @@
 # mkdr
-`mkdr` is a DaC(Directories as Code) tool by which you can generate, export and reorganize direcotory structure based on a YAML format.
-
+`mkdr` is a DaC(Directories as Code) tool by which you can organize directories based on a YAML format and export its structure.
 
 ## Install
 Supported only on Mac OS. Installed via homebrew.
@@ -9,7 +8,6 @@ Supported only on Mac OS. Installed via homebrew.
 brew tap krzmknt/mkdr
 brew install mkdr
 ```
-
 
 ## Example
 1. Create the base file `mkdrcompose.yml`. For example:
@@ -35,10 +33,10 @@ brew install mkdr
   - app.log
   - error.log
 ```
+
 2. Run `mkdr` in the same directory where the base file `mkdrcompose.yml` placesd. The specified objects are generated.
 
-
-## Specification
+# Specification
 
 ### Summary
 | Mode\Option | Feature(No option)  | `--force` | `--name` | '--nut'            |

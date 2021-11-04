@@ -1,0 +1,28 @@
+- test:
+  - filename.txt
+  - test.py
+  - mkdrcompose.yml
+  - Hello:
+    - pritn.md
+    - World:
+      - null
+- mkdrcompose.yml:2
+- mkdr.tar.gz
+- .mkdr.py.swp
+- mkdr.py
+- TODO.md
+- README.md
+- build.sh
+- config.yml
+- deploy.sh
+- Ob.py
+- src:
+  - index.html
+  - static:
+    - index.html:2
+    - style.css
+  - backup:
+    - index.html:3
+    - static:
+      - index.html:4
+      - style.css:2

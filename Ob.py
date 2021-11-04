@@ -1,12 +1,12 @@
 import os
 import shutil
 from pathlib import Path
-
+import re
 
 class Ob():
     FILE = 'f'
     DIR = 'd'
-    SEPARATOR = '#'
+    SEPARATOR = ':'
 
     def __init__(self, type:[str], path:[str], index=None):
         self.path = Path(path)
@@ -29,22 +29,21 @@ class Ob():
     match   = lambda self, pattern: self.path.match(pattern)
     glob    = lambda self, pattern: self.path.glob(pattern)
 
-    def make(self, copyFrom:[str]=None):
-        """
-        1. Make the file or dir according to its type and path.
-        2. Even if the objet already exists, it overwrites that.
-        3.
-        """
+    def make(self, basePath:[str]='.', indexed=False, copyFrom:[str]=None, ):
+        path = Path(basePath).joinpath(self.indexed() if indexed else self.path)
         if self.isFile():
             try:
-                Path(self.base()).mkdir(mode=511, parents=True, exist_ok=True)
-                self.path.touch(mode=438, exist_ok=True)
+                # Path(self.base()).mkdir(mode=511, parents=True, exist_ok=True)
+                # self.path.touch(mode=438, exist_ok=True)
+                path.parent.mkdir(mode=511, parents=True, exist_ok=True)
+                path.touch(mode=438, exist_ok=True)
                 # print('Created: {}'.format(self))
             except:
                 print('ERROR: File format error.')
         else:
             try:
-                self.path.mkdir(mode=511, parents=True, exist_ok=True)
+                # self.path.mkdir(mode=511, parents=True, exist_ok=True)
+                path.mkdir(mode=511, parents=True, exist_ok=True)
                 # print('Created: {}/'.format(self))
             except FileExistsError:
                 print('ERROR: the file is already exists.')
@@ -66,6 +65,18 @@ class Ob():
         dstOb.make()
         shutil.copyfile(str(self), str(dstOb))
 
+    def linkFrom(self, src):
+        if self.exists():
+            self.remove()
+        os.link(src, self.path)
+
+    def linkTo(self, dst):
+        dstOb = Ob(Ob.FILE, dst)
+        if dstOb.exists():
+            dstOb.remove()
+        os.link(self.path, dst)
+
+
     def remove(self):
         if self.isFile():
             os.remove(str(self))
@@ -73,6 +84,21 @@ class Ob():
         else:
             shutil.rmtree(str(self))
             # print('Removed: {}/'.format(self))
+
+
+    def isMatched(self, patterns):
+        if patterns is None:
+            return False
+
+        name = self.name()
+        if self.isDir():
+            name = name + '/'
+
+        for pattern in patterns:
+            if re.fullmatch(r'{}'.format(pattern), name, flags=re.IGNORECASE):
+                print(self.name(), 'matched!')
+                return True
+        return False
 
 
 
