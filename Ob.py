@@ -96,7 +96,7 @@ class Ob():
 
         for pattern in patterns:
             if re.fullmatch(r'{}'.format(pattern), name, flags=re.IGNORECASE):
-                print(self.name(), 'matched!')
+                # print(self.name(), 'matched!')
                 return True
         return False
 

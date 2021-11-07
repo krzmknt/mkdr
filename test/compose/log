@@ -1,0 +1,7 @@
+Success: Basic compose - no option
+Success: Basic compose --compose
+Success: Basic compose -c
+Success: template will be used
+Success: template will not be used
+Success: timestamp-html
+Success: timestamp-not-exist

@@ -1,0 +1,146 @@
+#------------------------------------------------------------------------------#
+# Basic
+#------------------------------------------------------------------------------#
+- description: Basic - Mkdr is invoked with the commnad mkdr.
+  testid: superuser
+- description: Basic - Mkdr makes, deletes and copies files and directories and makes links of objects on the file systems, so that the execution in privileged mode is prohibited.
+  testid: superuser
+
+
+#------------------------------------------------------------------------------#
+# Compose
+#------------------------------------------------------------------------------#
+- description: Compose - Compose mode is invoked with -c, --compose or with no option.
+  testid: compose
+- description: Compose - The files and directories will be created according to the beakfile named mkdrcompose.yml.
+  testid: compose
+- description: Compose - Created files have a timestamp at the time of creation and have no contents (zero-byte)
+  testid: compose
+- description: Compose - If you have prepared a template file in the mkdr configuration directory, then the same contents will be created when the file is created. Template files can be prepared for each extension.
+  testid: compose
+- description: Compose - A beakfile is used as the representation of the construction for files and directories you want to organize.
+  testid: compose
+
+
+#------------------------------------------------------------------------------#
+# Export
+#------------------------------------------------------------------------------#
+- description: Export - Export mode is invoked with -e, —export option.
+  testid: export
+- description: Export - Export the organization of files and directories to a beakfile named mkdrcomose.yml.
+  testid: export
+- description: Export - The generated list is indexed.
+  testid: export
+- description: Export - Empty directory has only one null object'
+  testid: export
+- description: Export - Export the current directory construction as the beakfile.
+  testid: export
+
+
+#------------------------------------------------------------------------------#
+# Delete
+#------------------------------------------------------------------------------#
+- description: Delete - Delete mode is invoked with -d, --delete option.
+  testid: export
+- description: Delete - Delete the files and directories specified in the compose file 'mkdrcompose.yml'.
+  testid: export
+- description: Delete - Delete the files and directories according to the beakfile.
+  testid: export
+
+
+#------------------------------------------------------------------------------#
+# Reorg
+#------------------------------------------------------------------------------#
+- description: Reorg - Inboked with -r, --reorg option.
+  testid: reorg
+- description: Reorg - Reorganize the files and dirctories according to the compose file mkdrcompose.yml.
+  testid: reorg
+- description: Reorg - No new file will be created.
+  testid: reorg
+- description: Reorg - Relocated files has the same contents and the metadata as before.
+  testid: reorg
+- description: Reorg - If the specified objects does not exist, the execution aborts.
+  testid: reorg
+- description: Reorg - This mode relocates files into another directories according to the beakfile.
+  testid: reorg
+- description: Reorg - If multiple files have the same filename in the beakfile, the files are distinguished by its index labeled <filename>:<number>
+  testid: reorg
+- description: Reorg - Relocated objects have the same meta data as before.
+  testid: reorg
+- description: Reorg - The objects exist but are not specified in beakfile will disapear.
+  testid: reorg
+
+
+#------------------------------------------------------------------------------#
+# Beakfile
+#------------------------------------------------------------------------------#
+- description: beakfile - in default, a file named mkdrcompose.yml is used.
+  testid: beakfile
+- description: beakfile - Beakfile placed in the mkdr configuration directory ~/.config/mkdr/ or in the current directory will be read. If the beakfiles exist in the both directories, the one in the current directory takes precedence.
+  testid: beakfile
+- description: beakfile - You can specify the custom beakfile name with the option --name, e.g. mkdr --export --name mkdrexpoted.yml.
+  testid: beakfile
+- description: beakfile - An option -n is also available as an abbreviation for —name
+  testid: beakfile
+- description: beakfile - Syntax of beakfile follows the YAML notation. If its contents is invalid in the YAML manner, mkdr returns an error.
+  testid: beakfile
+- description: beakfile - The naming conventions for files and directories should follow those of the operating system.
+  testid: beakfile
+- description: beakfile - File and directory are represented as string and dictionary respectivery. E.g., a directory which has no file is represented as below.
+  testid: beakfile
+
+
+#------------------------------------------------------------------------------#
+# Confirmation
+#------------------------------------------------------------------------------#
+- description: Confirmation - If the command makes important changes to files, it may ask for confirmation to continue or may abort execution.
+  testid: confirmation
+- description: Confirmation - If a beakfile with the same name already exists, check if it can be overwritten.
+  testid: confirmation
+- description: Confirmation - Check before deleting an object.
+  testid: confirmation
+- description: Confirmation - No confirmation
+  testid: confirmation
+
+
+#------------------------------------------------------------------------------#
+# Force option
+#------------------------------------------------------------------------------#
+- description: Force - You can execute the mkdr command in forced mode by specifying the -f or --force option.
+  testid: force
+- description: Force - Some prohibited operations or operations that require confirmation are executed without confirmation.
+  testid: force
+- description: Force - Compose - If the objects specified in beakfile already exist, they will be overwritten.
+  testid: force
+- description: Force - Export - If the same name beakfile already exists, it will be overwritten.
+  testid: force
+- description: Force - Delete - In forced mode, mkdr does not confirm deletion.
+  testid: force
+- description: Force - Reorg - Not supported
+  testid: force
+
+
+#------------------------------------------------------------------------------#
+# .mkdrignore
+#------------------------------------------------------------------------------#
+- description: ignore - The objects described in .mkdrignore can be excluded from operations by mkdr.
+  testid: ignore
+- description: ignore - Use regex to describe object names.
+  testid: ignore
+- description: ignore - Full matching from beginning to end of line without ^ or $.
+  testid: ignore
+- description: ignore - Note that special characters need to be escaped with a backslash in order to be recognized as a normal string.
+  testid: ignore
+- description: ignore - When specifying a directory, put  a slash / at the end of the line.
+  testid: ignore
+- description: ignore - When specifying a directory, put  a slash / at the end of the line.
+  testid: ignore
+- description: ignore - Compose - The file specified in .mkdrignore will not be created.
+  testid: ignore
+- description: ignore - Export - The file specified in .mkdrignore will not be exported.
+  testid: ignore
+- description: ignore - Delete - The file specified in .mkdrignore will not be deleted.
+  testid: ignore
+- description: ignore - The objects specified in .mkdrignore wiil disappear.
+  testid: ignore
+

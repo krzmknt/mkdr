@@ -1,0 +1,16 @@
+[32mSuccess: 15 directories/files have been created![0m
+[32m - dir[0m
+[32m - dir/1[0m
+[32m - dir/2[0m
+[32m - dir/3[0m
+[32m - dir/a[0m
+[32m - dir/a/a[0m
+[32m - dir/a/a/index.html[0m
+[32m - dir/a/a/style.css[0m
+[32m - dir/a/a/a[0m
+[32m - dir/a/a/a/index.html[0m
+[32m - dir/test.txt[0m
+[32m - dir/test.md[0m
+[32m - dir/test.py[0m
+[32m - dir/test.html[0m
+[32m - index.html[0m

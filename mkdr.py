@@ -19,7 +19,7 @@ import termios
 import yaml
 
 from Ob import Ob
-
+from color import green, red
 
 
 # --------------------------------------------------------------------------- #
@@ -71,13 +71,6 @@ ignorePatterns = None
 
 
 # --------------------------------------------------------------------------- #
-# Color Text
-# --------------------------------------------------------------------------- #
-red = lambda str: print('\033[31m'+str+'\033[0m')
-green =  lambda str: print('\033[32m'+str+'\033[0m')
-
-
-# --------------------------------------------------------------------------- #
 # Check
 # --------------------------------------------------------------------------- #
 def check():
@@ -88,40 +81,40 @@ def check():
 
 def checkUser():
     if os.getuid() == 0:
-        red('UserError: Running mkdr as root is not supported.')
+        print(red('UserError: mkdr cannot be executed by superuser.'))
         sys.exit()
 
 
 def checkMode():
     numOfModes = arg.compose + arg.export + arg.delete + arg.reorg + arg.configure
     if numOfModes > 1:
-        red('ModeError: Only one mode can be specified.')
+        print(red('ModeError: Only one mode can be specified.'))
         sys.exit()
 
 
 def checkOptionCombination():
     if arg.export or arg.delete or arg.reorg:
         if arg.nut:
-            red('Only compose mode suppourts --not-use-template option.')
+            print(red('Only compose mode suppourts --not-use-template option.'))
             sys.exit()
 
     if arg.force:
         if arg.reorg:
-            red('Reorg mode does not suppourt --force option.')
+            print(red('Reorg mode does not suppourt --force option.'))
             sys.exit()
 
     if arg.configure:
         if arg.nut or arg.force or arg.name:
-            red('Configure mode does not suppourt any other option.')
+            print(red('Configure mode does not suppourt any other option.'))
             sys.exit()
 
 
 def checkNotExist(obs):
     existingObs = [ob for ob in obs if ob.exists()]
     if existingObs:
-        red('FileExistError: The object(s) already exist(s).')
+        print(red('FileExistError: The object(s) already exist(s).'))
         for ob in existingObs:
-            red(' - '+str(ob))
+            print(red(' - '+str(ob)))
         print('Hint: If you overwrite, please specify `-f|--force` option.')
         sys.exit()
 
@@ -129,16 +122,16 @@ def checkNotExist(obs):
 def checkExist(obs):
     notExistingObs = [ob for ob in obs if not ob.exists()]
     if notExistingObs:
-        red('FileNotExistError: The objects are not exists.')
+        print(red('FileNotExistError: The objects are not exists.'))
         for ob in notExistingObs:
-            red('  '+str(ob))
+            print(red('  '+str(ob)))
         sys.exit()
 
 
 def checkComposeFileSemantics(obs):
     paths = [str(ob) for ob in obs]
     if len(paths) > len(set(paths)):
-        red('ObjectDuplicationError: {} duplications have been found in \'{}\'.'.format(dups,MKDR_COMPOSE_FILENAME))
+        print(red('ObjectDuplicationError: {} duplications have been found in \'{}\'.'.format(dups,MKDR_COMPOSE_FILENAME)))
         sys.exit()
 
 
@@ -171,13 +164,13 @@ def loadYml():
         with open(MKDR_COMPOSE_FILENAME) as f:
             yml = yaml.load(f, Loader=yaml.SafeLoader)
             if not isinstance(yml,list):
-                red('InvalidFormatError: \'{}\''.format(MKDR_COMPOSE_FILENAME))
+                print(red('InvalidFormatError: \'{}\''.format(MKDR_COMPOSE_FILENAME)))
                 sys.exit()
     except FileNotFoundError as err:
-        red('FileNotFoundError: No such file: \'{}\''.format(MKDR_COMPOSE_FILENAME))
+        print(red('FileNotFoundError: No such file: \'{}\''.format(MKDR_COMPOSE_FILENAME)))
         sys.exit()
     except yaml.scanner.ScannerError as err:
-        red('InvalidFormatError: \'{}\'\n{}'.format(MKDR_COMPOSE_FILENAME, err))
+        print(red('InvalidFormatError: \'{}\'\n{}'.format(MKDR_COMPOSE_FILENAME, err)))
         sys.exit()
     return yml
 
@@ -296,9 +289,9 @@ def compose():
         copyTemplate(obs)
 
     # Log
-    green('Success: %d directories/files have been created!' % len(composedObs))
+    print(green('Success: %d directories/files have been created!' % len(composedObs)))
     for ob in composedObs:
-        green(' - {}'.format(ob))
+        print(green(' - {}'.format(ob)))
 
 
 def export():
@@ -321,7 +314,7 @@ def export():
             yaml.dump(yml, f)
 
     # Log
-    green('Success: Exported!')
+    print(green('Success: Exported!'))
 
 
 def delete():
@@ -340,9 +333,9 @@ def delete():
 
     # Log
     if len(deletedObs) > 0:
-        green('Success: The objects have been deleted!')
+        print(green('Success: The objects have been deleted!'))
         for ob in deletedObs:
-            green(' - {}'.format(ob))
+            print(green(' - {}'.format(ob)))
     else:
         print('No object.')
 
@@ -358,7 +351,7 @@ def reorg():
         try:
             [ob.linkTo(ob.under(tmpDirPath).indexed()) for ob in obsFromDir if ob.isFile()]
         except:
-            red('CopyFileErrror: The specified file is not exists or another unknown error occured.')
+            print(red('CopyFileErrror: The specified file is not exists or another unknown error occured.'))
             sys.exit()
 
     # Step 2/2. Link back TmpDir to Dir (acc. mkdrcompose.yml)
@@ -370,7 +363,7 @@ def reorg():
         if all([ob.under(tmpDirPath).exists() for ob in obs if ob.isFile()]):
             pass
         else:
-            red('FileNotExistsError: Specified objects must exist.')
+            print(red('FileNotExistsError: Specified objects must exist.'))
             sys.exit()
 
         # Link back
@@ -379,11 +372,11 @@ def reorg():
         try:
             [ob.linkFrom(ob.under(tmpDirPath).indexed()) for ob in obs if ob.isFile()]
         except:
-            red('CopyFileErrror: The object cannot be copied for some reason.')
+            print(red('CopyFileErrror: The object cannot be copied for some reason.'))
             sys.exit()
 
     # Log
-    green('Success: The objects have been reorganized!')
+    print(green('Success: The objects have been reorganized!'))
 
 
 def configure():
