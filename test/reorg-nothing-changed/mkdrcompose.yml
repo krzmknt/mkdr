@@ -1,0 +1,5 @@
+- file
+- dir:
+  - file:2
+  - dir:
+    - file:3

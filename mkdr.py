@@ -36,8 +36,6 @@ parser.add_argument('-r', '--reorg', action='store_true',
     help="Execute mkdr in the reorg mode.")
 parser.add_argument('-e', '--export', action='store_true',
     help="Export the current objects organization to mkdr config file.")
-parser.add_argument('--configure', action='store_true',
-    help="Show the mkdr configuration file path.")
 
 # Option
 parser.add_argument('-f', '--force', action='store_true',
@@ -86,7 +84,7 @@ def checkUser():
 
 
 def checkMode():
-    numOfModes = arg.compose + arg.export + arg.delete + arg.reorg + arg.configure
+    numOfModes = arg.compose + arg.export + arg.delete + arg.reorg
     if numOfModes > 1:
         print(red('ModeError: Only one mode can be specified.'))
         sys.exit()
@@ -101,11 +99,6 @@ def checkOptionCombination():
     if arg.force:
         if arg.reorg:
             print(red('Reorg mode does not suppourt --force option.'))
-            sys.exit()
-
-    if arg.configure:
-        if arg.nut or arg.force or arg.name:
-            print(red('Configure mode does not suppourt any other option.'))
             sys.exit()
 
 
@@ -341,12 +334,11 @@ def delete():
 
 
 def reorg():
-    with tempfile.TemporaryDirectory(dir='.') as tmpDirPath:
     # Step 1/2. Link Dir to TmpDir
-        # Get
-        ymlFromDir = getYmlFromDirs('.')
-        obsFromDir = getObsFromYml(ymlFromDir)
-
+    # Get
+    ymlFromDir = getYmlFromDirs('.')
+    obsFromDir = getObsFromYml(ymlFromDir)
+    with tempfile.TemporaryDirectory(dir='.') as tmpDirPath:
         # Link
         try:
             [ob.linkTo(ob.under(tmpDirPath).indexed()) for ob in obsFromDir if ob.isFile()]
@@ -366,9 +358,22 @@ def reorg():
             print(red('FileNotExistsError: Specified objects must exist.'))
             sys.exit()
 
+        deleteDirs(obsFromDir)
+        # print('obsFromDir')
+        # for ob in obsFromDir:
+        #     print(ob)
+
         # Link back
         deleteDirs(obs)
         composeDirs(obs)
+
+        # print('\ntmpDirPath')
+        # for ob in os.listdir(tmpDirPath):
+        #     print(ob)
+        # print('\nobs')
+        # for ob in obs:
+        #     print(ob)
+
         try:
             [ob.linkFrom(ob.under(tmpDirPath).indexed()) for ob in obs if ob.isFile()]
         except:
@@ -379,11 +384,6 @@ def reorg():
     print(green('Success: The objects have been reorganized!'))
 
 
-def configure():
-    # TODO: どうやって設定変えるのか。アプリで変えさせたい。
-    print('configpath [{}]:'.format(MKDR_CONFIG_PATH))
-    print('composefile [{}]:'.format(MKDR_COMPOSE_FILENAME))
-    print('ignorefile [{}]:'.format(MKDR_IGNORE_FILENAME))
 
 
 # --------------------------------------------------------------------------- #
@@ -392,15 +392,10 @@ def configure():
 def main():
     """
     1. Check arguments
-    2. Configure (if it is the case)
-    3. Set global variables
-    4. Execute the main procedure
+    2. Set global variables
+    3. Execute the main procedure
     """
     check()
-
-    if arg.configure:
-        configure()
-        sys.exit()
 
     if arg.name:
         global MKDR_COMPOSE_FILENAME

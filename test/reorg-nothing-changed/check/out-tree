@@ -1,0 +1,18 @@
+.
+├── check
+│   ├── out-file1
+│   ├── out-file2
+│   ├── out-file3
+│   ├── out-reorg
+│   └── out-tree
+├── dir
+│   ├── dir
+│   │   └── file
+│   └── file
+├── file
+├── log
+├── mkdrcompose.yml
+├── out-tree
+└── test.sh
+
+3 directories, 12 files

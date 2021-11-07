@@ -33,42 +33,35 @@
   testid: export
 - description: Export - Empty directory has only one null object'
   testid: export
-- description: Export - Export the current directory construction as the beakfile.
-  testid: export
 
 
 #------------------------------------------------------------------------------#
 # Delete
 #------------------------------------------------------------------------------#
 - description: Delete - Delete mode is invoked with -d, --delete option.
-  testid: export
-- description: Delete - Delete the files and directories specified in the compose file 'mkdrcompose.yml'.
-  testid: export
-- description: Delete - Delete the files and directories according to the beakfile.
-  testid: export
-
+  testid: delete
+- description: Delete - Delete the files and directories according to the beakfile 'mkdrcompose.yml'.
+  testid: delete
+- description: Delete - Index specified in the beakfile will be ignored.
+  testid: delete
 
 #------------------------------------------------------------------------------#
 # Reorg
 #------------------------------------------------------------------------------#
 - description: Reorg - Inboked with -r, --reorg option.
-  testid: reorg
+  testid: reorg-nothing-changed
+- description: Reorg - The objects exist but are not specified in beakfile will disapear.
+  testid: reorg-nothing-changed
+- description: Reorg - Relocated files has the same contents and the metadata as before.
+  testid: reorg-nothing-changed
+- description: Reorg - If multiple files have the same filename in the beakfile, the files are distinguished by its index labeled <filename>:<number>
+  testid: reorg-nothing-changed
 - description: Reorg - Reorganize the files and dirctories according to the compose file mkdrcompose.yml.
   testid: reorg
-- description: Reorg - No new file will be created.
-  testid: reorg
-- description: Reorg - Relocated files has the same contents and the metadata as before.
-  testid: reorg
 - description: Reorg - If the specified objects does not exist, the execution aborts.
-  testid: reorg
-- description: Reorg - This mode relocates files into another directories according to the beakfile.
-  testid: reorg
-- description: Reorg - If multiple files have the same filename in the beakfile, the files are distinguished by its index labeled <filename>:<number>
-  testid: reorg
-- description: Reorg - Relocated objects have the same meta data as before.
-  testid: reorg
-- description: Reorg - The objects exist but are not specified in beakfile will disapear.
-  testid: reorg
+  testid: reorg-abort
+- description: Reorg - No new file will be created.
+  testid: reorg-abort
 
 
 #------------------------------------------------------------------------------#

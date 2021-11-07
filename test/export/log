@@ -1,0 +1,4 @@
+Success: Export --export
+Success: The exported beakfile name is mkdrcompose.yml
+Success: The validity of the contents of mkdrcompose.yml
+Success: Export -e

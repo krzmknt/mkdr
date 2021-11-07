@@ -1,0 +1,21 @@
+- index.html
+- dir:
+  - '1':
+    - null
+  - test.py
+  - a:
+    - a:
+      - index.html:2
+      - a:
+        - index.html:3
+      - style.css
+  - test.html
+  - test.txt
+  - test.md
+  - '3':
+    - null
+  - '2':
+    - null
+- check:
+  - null
+- compose.yml

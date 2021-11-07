@@ -1,0 +1,18 @@
+- dir:
+  - 1:
+    - null
+  - '2':
+  - "3":
+
+  - a:
+    - a:
+      - index.html
+      - style.css
+      - a:
+        - index.html
+    # - 2:
+  - test.txt
+  - test.md
+  - test.py
+  - test.html
+- index.html
