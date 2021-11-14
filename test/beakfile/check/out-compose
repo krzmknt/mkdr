@@ -1,0 +1,11 @@
+.
+├── check
+│   └── out-delete
+├── log
+├── mkdrcompose.yml
+├── out-compose
+├── out-diff
+├── out-tree
+└── test.sh
+
+1 directory, 7 files

@@ -1,7 +1,0 @@
-- Mode
-  - Compose
-  - Export
-  - Delete
-  - Reorg
-- ignorefile
--  

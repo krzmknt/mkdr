@@ -1,7 +1,7 @@
 #------------------------------------------------------------------------------#
 # Basic
 #------------------------------------------------------------------------------#
-- description: Basic - Mkdr is invoked with the commnad mkdr.
+- description: Basic - Mkdr is invoked with the command mkdr.
   testid: superuser
 - description: Basic - Mkdr makes, deletes and copies files and directories and makes links of objects on the file systems, so that the execution in privileged mode is prohibited.
   testid: superuser
@@ -67,73 +67,39 @@
 #------------------------------------------------------------------------------#
 # Beakfile
 #------------------------------------------------------------------------------#
-- description: beakfile - in default, a file named mkdrcompose.yml is used.
-  testid: beakfile
+- description: beakfile - In default, a beakfile named mkdrcompose.yml is used.
+  testid: compose
 - description: beakfile - Beakfile placed in the mkdr configuration directory ~/.config/mkdr/ or in the current directory will be read. If the beakfiles exist in the both directories, the one in the current directory takes precedence.
-  testid: beakfile
+  testid: notyet
 - description: beakfile - You can specify the custom beakfile name with the option --name, e.g. mkdr --export --name mkdrexpoted.yml.
   testid: beakfile
 - description: beakfile - An option -n is also available as an abbreviation for —name
   testid: beakfile
-- description: beakfile - Syntax of beakfile follows the YAML notation. If its contents is invalid in the YAML manner, mkdr returns an error.
-  testid: beakfile
+- description: invalid-beakfile - Syntax of beakfile follows the YAML notation. If its contents is invalid in the YAML manner, mkdr returns an error.
+  testid: notyet
 - description: beakfile - The naming conventions for files and directories should follow those of the operating system.
-  testid: beakfile
+  testid: notyet
 - description: beakfile - File and directory are represented as string and dictionary respectivery. E.g., a directory which has no file is represented as below.
   testid: beakfile
-
-
-#------------------------------------------------------------------------------#
-# Confirmation
-#------------------------------------------------------------------------------#
-- description: Confirmation - If the command makes important changes to files, it may ask for confirmation to continue or may abort execution.
-  testid: confirmation
-- description: Confirmation - If a beakfile with the same name already exists, check if it can be overwritten.
-  testid: confirmation
-- description: Confirmation - Check before deleting an object.
-  testid: confirmation
-- description: Confirmation - No confirmation
-  testid: confirmation
-
-
-#------------------------------------------------------------------------------#
-# Force option
-#------------------------------------------------------------------------------#
-- description: Force - You can execute the mkdr command in forced mode by specifying the -f or --force option.
-  testid: force
-- description: Force - Some prohibited operations or operations that require confirmation are executed without confirmation.
-  testid: force
-- description: Force - Compose - If the objects specified in beakfile already exist, they will be overwritten.
-  testid: force
-- description: Force - Export - If the same name beakfile already exists, it will be overwritten.
-  testid: force
-- description: Force - Delete - In forced mode, mkdr does not confirm deletion.
-  testid: force
-- description: Force - Reorg - Not supported
-  testid: force
 
 
 #------------------------------------------------------------------------------#
 # .mkdrignore
 #------------------------------------------------------------------------------#
 - description: ignore - The objects described in .mkdrignore can be excluded from operations by mkdr.
-  testid: ignore
+  testid: beakfile
 - description: ignore - Use regex to describe object names.
-  testid: ignore
+  testid: beakfile
 - description: ignore - Full matching from beginning to end of line without ^ or $.
-  testid: ignore
+  testid: beakfile
 - description: ignore - Note that special characters need to be escaped with a backslash in order to be recognized as a normal string.
-  testid: ignore
+  testid: reorg
 - description: ignore - When specifying a directory, put  a slash / at the end of the line.
-  testid: ignore
-- description: ignore - When specifying a directory, put  a slash / at the end of the line.
-  testid: ignore
+  testid: reorg
 - description: ignore - Compose - The file specified in .mkdrignore will not be created.
-  testid: ignore
+  testid: beakfile
 - description: ignore - Export - The file specified in .mkdrignore will not be exported.
-  testid: ignore
+  testid: export
 - description: ignore - Delete - The file specified in .mkdrignore will not be deleted.
-  testid: ignore
-- description: ignore - The objects specified in .mkdrignore wiil disappear.
-  testid: ignore
+  testid: delete
 

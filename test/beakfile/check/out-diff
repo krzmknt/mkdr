@@ -1,0 +1,17 @@
+1a2
+> ├── a
+3,4c4,5
+< │   └── out-delete
+< ├── log
+---
+> │   ├── out-delete
+> │   └── out-tree
+6d6
+< ├── out-compose
+8,9d7
+< ├── out-diff
+< ├── out-tree
+12c10
+< 1 directory, 8 files
+---
+> 1 directory, 6 files

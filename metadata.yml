@@ -1,0 +1,20 @@
+version: 1.0
+defaultMode: 'compose'
+
+# Config path
+localConfigPath: '.mkdr'
+envConfigPath: 'MKDR_CONFIG_PATH'
+defaultConfigPath: '~/.config/mkdr/'
+
+# Beakfile
+envBeakfileName: 'MKDR_BEAKFILE'
+defaultBeakfileName: 'mkdrcompose.yml'
+
+# Ignorefile
+envIgnorefileName: 'MKDR_IGNOREFILE'
+defaultIgnorefileName: '.mkdrignore'
+
+# Object
+filesign: 'f'
+dirsign: 'd'
+separator: ':'
