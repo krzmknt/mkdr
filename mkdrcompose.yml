@@ -1,11 +1,4 @@
-- .Ob.py.swp
-- mkdr.tar.gz
-- mkdr.py
-- README.md
-- .mkdrignore
-- build.sh
-- mkdrcompose.yml
-- CheckList.md
-- config.yml
-- deploy.sh
-- Ob.py
+- dirname:
+  - a
+  - b:
+    - null

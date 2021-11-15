@@ -1,6 +1,6 @@
 import sys
-from color import red as red
-from color import green as green
+from util import red
+from util import green
 
 
 # --------------------------------------------------------------------------- #
@@ -27,10 +27,10 @@ def checkFileSemantics(mkdr):
 # --------------------------------------------------------------------------- #
 # Mode
 # --------------------------------------------------------------------------- #
-def compose(arg, mkdr):
+def main(arg, mkdr):
     # Get
     mkdr.loadBeakfile()
-    obs = mkdr.getBeaks()
+    obs = mkdr.setBeaks()
 
     # Check
     checkFileSemantics(obs)
@@ -49,9 +49,5 @@ def compose(arg, mkdr):
         print(green(' - {}'.format(beak)))
 
 
-def main():
-    pass
-
 if __name__ == '__main__':
-    main()
-
+    pass

@@ -2,10 +2,10 @@ import os
 import sys
 import yaml
 import tempfile
-from color import green
+from util import green
 
 
-def export(arg, mkdr):
+def main(arg, mkdr):
     if os.path.exists(mkdr.beakfileName) and not arg.force:
         print('The file \'{}\' already exists. '\
             'Do you overwrite with this saving file? [Y/n]:'.format(mkdr.beakfileName))
@@ -24,9 +24,5 @@ def export(arg, mkdr):
     print(green('Success: Exported!'))
 
 
-def main():
-    pass
-
 if __name__ == '__main__':
-    main()
-
+    pass

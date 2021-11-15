@@ -34,17 +34,17 @@ def getArg():
 
     # export
     parser_e = subparsers.add_parser('export', aliases=['e'], help='Export the current objects organization to a beakfile.')
-    parser_e.add_argument('beakfile', help='Specify a path of an arbitrary beakfile.')
+    parser_c.add_argument('beakfile', type=str, nargs='?', default='mkdrcompose.yml', help='Specify a path of an arbitrary beakfile.')
     parser_e.add_argument('-f', '--force', action='store_true', help='If the beakfile already exists, mkdr overwrites that.')
 
     # delete
     parser_d = subparsers.add_parser('delete', aliases=['d'], help='Delete objects according to a beakfile.')
-    parser_d.add_argument('beakfile', help='Specify a path of an arbitrary beakfile.')
+    parser_c.add_argument('beakfile', type=str, nargs='?', default='mkdrcompose.yml', help='Specify a path of an arbitrary beakfile.')
     parser_d.add_argument('-f', '--force', action='store_true', help='Delete the objecsts without confirmation')
 
     # reorg
     parser_r = subparsers.add_parser('reorg', aliases=['r'], help='Reorganize objects according to a beakfile.')
-    parser_r.add_argument('beakfile', help='login with this username')
+    parser_c.add_argument('beakfile', type=str, nargs='?', default='mkdrcompose.yml', help='Specify a path of an arbitrary beakfile.')
     parser_r.add_argument('passphrase', help='login with this passphrase')
 
     arg = parser.parse_args()
@@ -68,6 +68,7 @@ def main():
     mode = [mode.rstrip('.py') for mode in os.listdir(os.path.join(os.path.dirname(__file__), 'mode')) if arg.mode[0] == mode[0]][0]
 
     from importlib import import_module
+    print(mode)
     import_module('mode.'+mode).main(arg, mkdr)
 
 

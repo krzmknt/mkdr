@@ -1,10 +1,10 @@
 import sys
 import tempfile
-from color import red as red
-from color import green as green
+from util import red
+from util import green
 
 
-def reorg():
+def main():
     # Step 1/2. Link Dir to TmpDir
     # Get
     mkdr.genBeakfile()
@@ -47,9 +47,6 @@ def reorg():
     print(green('Success: The objects have been reorganized!'))
 
 
-def main():
-    pass
-
 if __name__ == '__main__':
-    main()
+    pass
 

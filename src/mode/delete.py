@@ -1,8 +1,8 @@
 import sys
-from color import green
+from util import green
 
 
-def delete(arg, mkdr):
+def main(arg, mkdr):
     if not arg.force:
         beaksWillBeDeleted = Herd([beak for beak in self.beaks if beak.exists()])
         if not beaksWillBeDeleted.exist():
@@ -28,9 +28,5 @@ def delete(arg, mkdr):
 
 
 
-def main():
-    pass
-
 if __name__ == '__main__':
-    main()
-
+    pass

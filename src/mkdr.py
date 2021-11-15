@@ -28,16 +28,19 @@ class Mkdr:
         else:
             self.configPath = getenv(envConfigPath, defaultConfigPath)
 
-        # Beakfile (env > default)
-        envBeakfile = loadMetadata('envBeakfileName')
-        defaultBeakfile = loadMetadata('defaultBeakfileName')
-        self.beakfileName = getenv(envBeakfile, defaultBeakfile)
-        self.beakfilePath = join(self.configPath, self.beakfileName)
+        # Beakfile (local > env > default)
+        envBeakfileName = loadMetadata('envBeakfileName')
+        defaultBeakfileName = loadMetadata('defaultBeakfileName')
+        self.beakfileName = getenv(envBeakfileName, defaultBeakfileName)
+        if os.path.exists(self.beakfileName):
+            self.beakfilePath = self.beakfileName
+        else:
+            self.beakfilePath = join(self.configPath, self.beakfileName)
 
         # Ignorefile (enc > defualt)
-        envIgnorefile = loadMetadata('envIgnorefileName')
-        defaultIgnorefile = loadMetadata('defaultIgnorefileName')
-        self.ignorefileName = getenv(envIgnorefile, defaultIgnorefile)
+        envIgnorefileName = loadMetadata('envIgnorefileName')
+        defaultIgnorefileName = loadMetadata('defaultIgnorefileName')
+        self.ignorefileName = getenv(envIgnorefileName, defaultIgnorefileName)
         self.ignorefilePath = join(self.configPath, self.ignorefileName)
 
         # Mkdr
@@ -51,6 +54,7 @@ class Mkdr:
     def loadBeakfile(self):
         # TODO: json compatibility
         try:
+            print(self.beakfilePath)
             with open(self.beakfilePath) as beakfile:
                 self.beakfile = yaml.load(beakfile, Loader=yaml.SafeLoader)
                 if not isinstance(self.beakfile, list):
@@ -76,13 +80,15 @@ class Mkdr:
         getDirName = lambda d: list(d.keys())[0]
         getDirContents = lambda d: d[getDirName(d)]
 
-        def getBeaksRcsvly(beakfile, basePath=['.']):
+        def getBeaksRcsvly(basePath=['.']):
             beaks = []
-            if beakfile is None:
+            if self.beakfile is None:
                 return []
-            for path in beakfile:
+            for path in self.beakfile:
                 if isDir(path):
                     dirName = str(getDirName(path))
+                    print(basePath)
+                    print(type(*basePath))
                     beak = Beak(Beak.DIR, os.path.join(*basePath,dirName))
                     if not beak.isMatched(self.ignorePatterns):
                         beaks.append(beak)
@@ -113,7 +119,7 @@ class Mkdr:
                 indexedBeaks.append(beak)
             return indexedBeaks
 
-        beaks = getIndexedBeaks(getBeaksRcsvly(beakfile))
+        beaks = index(getBeaksRcsvly(self.beakfile))
         self.beaks = Herd(beaks)
         return self.beaks
 
